@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django import forms
+from .widgets import FileSelectorWidget
 
 
 class SampleWidgetView(TemplateView):
@@ -9,7 +10,7 @@ class SampleWidgetView(TemplateView):
 
 class FileSelectorView(SampleWidgetView):
     class SampleForm(forms.Form):
-        files = forms.FileField()
+        files = forms.FileField(widget=FileSelectorWidget())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
