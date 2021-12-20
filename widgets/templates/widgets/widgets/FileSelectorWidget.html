@@ -1,0 +1,69 @@
+<div>
+    <div id="preview_{{widget.name}}">
+        <a onclick="plusSlides(-1)" style="cursor: pointer; position: relative; top: 50%; width: auto; margin-top: -22px;padding: 16px; color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none">&#10094;</a>
+        <a onclick="plusSlides(1)" style="cursor: pointer; position: relative; top: 50%; width: auto; margin-top: -22px;padding: 16px; color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 3px 0 0 3px; user-select: none; right: 0">&#10095;</a>
+    </div>
+    <input type="file" id="id_{{widget.name}}" name="{{widget.name}}" multiple>
+    <script>
+        let filesInput = document.getElementById("id_{{widget.name}}");
+        let filesPreview = document.getElementById("preview_{{widget.name}}");
+        let slideIndex = 1;
+
+
+        function clearSlides(){
+            let slides = filesPreview.getElementsByClassName("slide");
+            for (let i=0; i<slides.length; ++i) {
+                const slide = slides[i]
+                filesPreview.removeChild(slide);
+            }
+        }
+        function createSlide(file, index, count){
+            const slideDiv = document.createElement("div");
+            slideDiv.classList.add("slide");
+
+            const counterDiv = document.createElement("div");
+            counterDiv.classList.add("numbertext");
+            counterDiv.innerText = (index+1) + " / " + count;
+            counterDiv.style.padding = "8px 12px";
+            counterDiv.style.position = "absolute";
+            counterDiv.style.top = "0";
+            slideDiv.appendChild(counterDiv);
+
+            const image = document.createElement("img");
+            image.src = URL.createObjectURL(file);
+            image.onload = _ => {
+                URL.revokeObjectURL(image.src); // Free memory
+            }
+            slideDiv.appendChild(image);
+
+            slideDiv.style.display = "none";
+            filesPreview.appendChild(slideDiv);
+        }
+
+        function showSlides(n){
+            let i;
+            let slides = filesPreview.getElementsByClassName("slide");
+            if(n > slides.length){ slideIndex =1}
+            if(n < 1){slideIndex = slides.length}
+            for(i=0; i< slides.length; ++i){
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex-1].style.display = "block";
+        }
+
+        function plusSlides(n){
+            showSlides(slideIndex += n)
+        }
+
+        filesInput.onchange = evt => {
+            clearSlides();
+            for (let i=0; i< filesInput.files.length; ++i) {
+                const file = filesInput.files[i];
+                if(file){
+                    createSlide(file, i, filesInput.files.length);
+                }
+                showSlides(1);
+            }
+        }
+    </script>
+</div>
