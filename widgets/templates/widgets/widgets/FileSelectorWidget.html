@@ -1,7 +1,10 @@
 <div>
-    <div id="preview_{{widget.name}}">
-        <a onclick="plusSlides(-1)" style="cursor: pointer; position: relative; top: 50%; width: auto; margin-top: -22px;padding: 16px; color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none">&#10094;</a>
-        <a onclick="plusSlides(1)" style="cursor: pointer; position: relative; top: 50%; width: auto; margin-top: -22px;padding: 16px; color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 3px 0 0 3px; user-select: none; right: 0">&#10095;</a>
+    <div id="preview_{{widget.name}}" style="max-width: 1000px; position: relative; margin: auto; min-height: 50vh">
+        <div class="slide">
+            <h3 style="text-align: center">No files selected</h3>
+        </div>
+        <a onclick="plusSlides(-1)" style="cursor: pointer; position: absolute; top: 50%; width: auto; margin-top: -22px;padding: 16px; color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 0 3px 3px 0; user-select: none; background-color: rgba(0,0,0,0.8)">&#10094;</a>
+        <a onclick="plusSlides(1)" style="cursor: pointer; position: absolute; top: 50%; width: auto; margin-top: -22px;padding: 16px; color: white; font-weight: bold; font-size: 18px; transition: 0.6s ease; border-radius: 3px 0 0 3px; user-select: none; right: 0; background-color: rgba(0,0,0,0.8)">&#10095;</a>
     </div>
     <input type="file" id="id_{{widget.name}}" name="{{widget.name}}" multiple>
     <script>
@@ -34,6 +37,8 @@
             image.onload = _ => {
                 URL.revokeObjectURL(image.src); // Free memory
             }
+            image.style.maxWidth = "75vw";
+            image.style.maxHeight = "75vh";
             slideDiv.appendChild(image);
 
             slideDiv.style.display = "none";
