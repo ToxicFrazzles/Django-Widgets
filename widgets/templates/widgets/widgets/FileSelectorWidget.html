@@ -15,9 +15,12 @@
 
         function clearSlides(){
             let slides = filesPreview.getElementsByClassName("slide");
+            console.log(slides);
             for (let i=0; i<slides.length; ++i) {
                 const slide = slides[i]
-                filesPreview.removeChild(slide);
+                slide.innerHTML = "";
+                slide.remove();
+                // filesPreview.removeChild(slide);
             }
         }
         function createSlide(file, index, count){
