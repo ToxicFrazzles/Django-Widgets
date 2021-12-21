@@ -26,12 +26,9 @@ class FileSelector {
     }
 
     clearSlides(){
-        let slides = this.previewContainer.getElementsByClassName("slide");
-        for (let i=0; i<slides.length; ++i) {
-            const slide = slides[i]
-            slide.innerHTML = "";
+        const slides = this.previewContainer.querySelectorAll(".slide");
+        for (let slide of slides) {
             slide.remove();
-            // filesPreview.removeChild(slide);
         }
     }
 
