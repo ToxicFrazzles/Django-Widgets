@@ -1,3 +1,4 @@
+{% load static %}
 <div class="file_selector" id="file_selector_{{widget.name}}">
     <div id="preview_{{widget.name}}" style="max-width: 1000px; position: relative; margin: auto; min-height: 50vh">
         <div class="slide">
@@ -8,6 +9,8 @@
     </div>
     <input type="file" id="id_{{widget.name}}" name="{{widget.name}}" multiple>
     <script>
-        new FileSelector(document.getElementById("file_selector_{{widget.name}}"));
+        document.addEventListener('ready', function () {
+            new FileSelector(document.getElementById("file_selector_{{widget.name}}"));
+        });
     </script>
 </div>

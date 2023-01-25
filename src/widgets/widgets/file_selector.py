@@ -5,6 +5,9 @@ class FileSelectorWidget(Widget):
     template_name = "widgets/widgets/FileSelectorWidget.html"
     needs_multipart_form = True
 
+    class Media:
+        js = ['widgets/file_selector.js']
+
     def __init__(self, attrs=None):
         super().__init__(attrs)
 

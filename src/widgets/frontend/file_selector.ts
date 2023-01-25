@@ -1,5 +1,9 @@
 class FileSelector {
-    constructor(containerDiv) {
+    private containerDiv: HTMLElement;
+    private filesInput: HTMLInputElement;
+    private previewContainer: HTMLDivElement;
+    private currentSlide: number;
+    constructor(containerDiv: HTMLElement) {
         this.containerDiv = containerDiv;
         this.filesInput = this.containerDiv.getElementsByTagName("input")[0];
         this.previewContainer = this.containerDiv.getElementsByTagName("div")[0];
@@ -17,7 +21,7 @@ class FileSelector {
         for (let i = 0; i < files.length; ++i) {
             const file = files[i];
             if (file) {
-                this.createSlide(file, i, files.length);
+                this.createSlide(file);
             }
             this.currentSlide = 1;
             this.showSlides();
@@ -32,7 +36,7 @@ class FileSelector {
         }
     }
 
-    createSlide(file){
+    createSlide(file: Blob | MediaSource){
         const slideDiv = document.createElement("div");
         slideDiv.classList.add("slide");
 
@@ -63,9 +67,10 @@ class FileSelector {
         if(this.currentSlide > slides.length){ this.currentSlide =1}
         if(this.currentSlide < 1){this.currentSlide = slides.length}
         for(i=0; i< slides.length; ++i){
-            slides[i].style.display = "none";
+            const slide = slides[i] as HTMLElement
+            slide.style.display = "none";
         }
-        slides[this.currentSlide-1].style.display = "block";
+        (<HTMLElement> slides[this.currentSlide-1]).style.display = "block";
     }
 
     nextSlide(){

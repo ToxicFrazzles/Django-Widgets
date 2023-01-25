@@ -1,11 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
-from django import forms
-from .widgets import FileSelectorWidget
+from django.forms import forms
 
-
-class SampleWidgetView(TemplateView):
-    template_name = "widgets/sample_view.html"
+from widgets.widgets import FileSelectorWidget
+from .sample import SampleWidgetView
 
 
 class FileSelectorView(SampleWidgetView):
