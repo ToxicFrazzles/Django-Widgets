@@ -1,12 +1,13 @@
 from django.forms import Widget
 
 
-class FileSelectorWidget(Widget):
-    template_name = "widgets/widgets/FileSelectorWidget.html"
+class SegementationMarkupWidget(Widget):
+    template_name = "widgets/widgets/SegmentationMarkupWidget.html"
     needs_multipart_form = True
 
     class Media:
-        js = ['widgets/file_selector.js']
+        js = ['widgets/SegmentationMarkup.js']
+        css = {"all": ('widgets/SegmentationMarkup.css',)}
 
     def __init__(self, attrs=None):
         super().__init__(attrs)
@@ -24,8 +25,3 @@ class FileSelectorWidget(Widget):
 
     def use_required_attribute(self, initial):
         return super().use_required_attribute(initial) and not initial
-
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
-        # context['widget']['type'] = self.input_type
-        return context

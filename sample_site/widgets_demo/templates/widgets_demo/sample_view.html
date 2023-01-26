@@ -3,13 +3,12 @@
 <html lang="en">
 <head>
     <title>Widgets Sample</title>
+    <link rel="stylesheet" href="{% static 'widgets_demo/base.css' %}">
     {{ form.media }}
 </head>
 <body>
 <form>
-    <table>
-    {{form.as_table}}
-    </table>
+    {{form}}
 </form>
 </body>
 </html>
