@@ -334,4 +334,4 @@ tests/cases/user/prettier/prettier
 
 
 # Ingore generated JavaScript files
-/src/**/*.js
+#/src/**/*.js
