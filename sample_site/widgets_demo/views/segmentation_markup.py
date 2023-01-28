@@ -10,7 +10,7 @@ class SegementationMarkupView(SampleWidgetView):
         image = static("widgets_demo/pexels-nina-15114796.jpg")
 
         class SampleForm(forms.Form):
-            files = forms.FileField(label='', widget=SegementationMarkupWidget(attrs={"image": image}))
+            files = forms.FileField(widget=SegementationMarkupWidget(attrs={"image": image}))
 
         context = super().get_context_data(**kwargs)
         context["form"] = SampleForm()

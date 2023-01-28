@@ -1,18 +1,57 @@
 const template = document.createElement("template");
 template.innerHTML = `
 <style>
+:host {
+    width: 100%;
+    height: 100%;
+    display: inline;
+}
 canvas {
     width: 100%;
     height: 100%;
+    position: relative;
 }
 #secondary-canvas {
     display: none;
 }
+img {
+    width:100%;
+    height: 100%;
+}
+#modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgb(0, 0, 0); /* Fallback colour */
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #888;
+    width: 80%;
+    height: 80%;
+}
 </style>
-<canvas id="primary-canvas"></canvas>
-<canvas id="secondary-canvas"></canvas>
-<img style="display: none"/>
+<img/>
+<div id="modal">
+    <div id="modal-content">
+        <canvas id="primary-canvas"></canvas>
+        <canvas id="secondary-canvas"></canvas>
+    </div>
+</div>
 `;
+
+
+function stopPropagation(e: Event){
+    e.stopPropagation();
+}
 
 
 class SegmentationMarkup extends HTMLElement{
@@ -27,6 +66,7 @@ class SegmentationMarkup extends HTMLElement{
     yOffset: number;
     ctx: CanvasRenderingContext2D;
     backCtx: CanvasRenderingContext2D;
+    private modalEl: HTMLElement;
 
     constructor() {
         super();
@@ -53,16 +93,32 @@ class SegmentationMarkup extends HTMLElement{
         this.imgEl.src = this.getAttribute("image");
         const self = this;
         this.imgEl.addEventListener("load", function(){self._imageLoaded()});
+        this.imgEl.addEventListener("click", function (){self.open()});
+
+        this.modalEl = this.shadowRoot.getElementById("modal");
+        this.modalEl.addEventListener("click", function (){
+            self.close();
+        });
 
         const resizeOb = new ResizeObserver(function(entries){
-            self._canvasResized(entries[0].contentRect);
+            self._resized(entries[0].contentRect);
         })
         resizeOb.observe(this);
 
         this.built = true;
     }
 
-    _canvasResized(rect: DOMRectReadOnly){
+    open(){
+        this.shadowRoot.getElementById("modal").style.display = "block";
+        this.modalEl.addEventListener("scroll", stopPropagation);
+    }
+
+    close(){
+        this.shadowRoot.getElementById("modal").style.display = "none";
+        this.modalEl.removeEventListener("scroll", stopPropagation);
+    }
+
+    _resized(rect: DOMRectReadOnly){
         console.log("Resized");
         this.primaryCanvas.width = rect.width;
         this.primaryCanvas.height = rect.height;
